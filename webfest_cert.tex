@@ -1,32 +1,31 @@
-% Use memoir for vplace
-\documentclass[12pt]{memoir}
-\usepackage[a5paper, landscape, left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
-\usepackage[utf8]{inputenc} % required latin1 for characters like: ô ç etc.
+\documentclass[12pt, a5paper,landscape,twoside]{memoir} % Use memoir for vplace
 
+\setlength{\pdfpagewidth}{\paperwidth}
+\setlength{\pdfpageheight}{\paperheight}
+
+\usepackage[utf8]{inputenc} % required for characters like: ô ç etc.
 \usepackage{color}
 \usepackage{wallpaper} % For background image frame
-
 \usepackage{datatool} % For loading data from file (e.g. from csv)
+\usepackage[absolute]{textpos}
+
 % Load database 'names' from file 'namelist.csv'
 \DTLloaddb[keys={OrderNumber,Date,First,Last,Email,Quantity,Ticket,Order,Total,Fees,Payment,Status,Country,DrupalOrg,Meal,OtherMeal,Job,Company}]{names}{namelist.csv}
 
 \begin{document}
-\color{white}
-\pagestyle{empty}
-% Set "A5_Badge_Front_Without_Placeholder.pdf" as background image
-\TileWallPaper{\paperwidth}{\paperheight}{A5_Badge_Front_Without_Placeholder}
-
-% For each record (line) in database 'names'
-% Assign field values by name to macros
-\DTLforeach{names}
-{\firstname=First, \lastname=Last}{
-  {
-    \begin{vplace}[1.4]
-    % Insert '\name' field
-    \raggedleft{\bfseries\MakeUppercase{\firstname}} {\bfseries\MakeUppercase{\lastname}}
-    \end{vplace}
-  }
-  \pagebreak
+  \color{white}
+  \pagestyle{empty}
+  % For each record (line) in database 'names'
+  \DTLforeach{names}{\firstname=First, \lastname=Last}{
+    {\ThisTileWallPaper{\paperwidth}{\paperheight}{A5_Badge_Front_Without_Placeholder}%
+     \vspace*{\fill}
+     \hspace*{12.1cm}\makebox[0pt]{\bfseries\MakeUppercase{\firstname} \MakeUppercase{\lastname}}
+     \vspace*{\fill}
+     \clearpage
+    }
+    {\ThisTileWallPaper{\paperwidth}{\paperheight}{A5_badge_back}%
+     \mbox{}\clearpage
+    }
 }
 
 \end{document}
