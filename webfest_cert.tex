@@ -1,13 +1,13 @@
 % Use memoir for vplace
-\documentclass[12pt]{memoir} 
-\usepackage[left=2cm,right=2cm,top=6cm,bottom=5cm]{geometry}
-\usepackage[latin1]{inputenc} % required latin1 for characters like: ô ç etc.
+\documentclass[12pt]{memoir}
+\usepackage[a5paper, landscape, left=2cm,right=2cm,top=6cm,bottom=5cm]{geometry}
+\usepackage[utf8]{inputenc} % required latin1 for characters like: ô ç etc.
 
 \usepackage{wallpaper} % For background image frame
 
 \usepackage{datatool} % For loading data from file (e.g. from csv)
 % Load database 'names' from file 'namelist.csv'
-\DTLloaddb{names}{namelist.csv}
+\DTLloaddb[keys={OrderNumber,Date,First,Last,Email,Quantity,Ticket,Order,Total,Fees,Payment,Status,Country,DrupalOrg,Meal,OtherMeal,Job,Company}]{names}{namelist.csv}
 
 \begin{document}
 \linespread{4}\selectfont
@@ -18,11 +18,11 @@
 % For each record (line) in database 'names'
 % Assign field values by name to macros
 \DTLforeach{names}
-{\name=Name, \gender=Gender}{
+{\firstname=First, \lastname=Last}{
   {
     \begin{vplace}[0.2]
     % Insert '\name' field
-    {\LARGE\bfseries\MakeUppercase{\name}}
+    {\bfseries{\firstname}} {\bfseries{\lastname}}
     \end{vplace}
   }
   \pagebreak
