@@ -1,4 +1,4 @@
-\documentclass[12pt, a5paper,landscape,twoside]{memoir} % Use memoir for vplace
+\documentclass[extrafontsizes,22pt, a5paper, landscape, twoside]{memoir} % Use memoir for vplace
 
 \setlength{\pdfpagewidth}{\paperwidth}
 \setlength{\pdfpageheight}{\paperheight}
@@ -8,6 +8,10 @@
 \usepackage{wallpaper} % For background image frame
 \usepackage{datatool} % For loading data from file (e.g. from csv)
 \usepackage[absolute]{textpos}
+
+\usepackage[scaled]{helvet} % Use Helvetica font
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
 
 % Load database 'names' from file 'namelist.csv'
 \DTLloadrawdb[keys={orderNumber,dateOrder,firstName,lastName,emailA,quantity,ticket,order,total,fees,payment,status,country,drupalOrg,meal,otherMeal,job,company}]{names}{namelist.csv}
@@ -23,10 +27,11 @@
    \vspace*{3cm}
    \hspace*{12.1cm}\makebox[0pt]{%
      \begin{tabular}{c}
-     \bfseries\MakeUppercase{\firstname} \MakeUppercase{\lastname}\\[3mm]
-     \dorg \\[1mm]
-     \job \\[1mm]
-     \company
+     {\fontsize{38}{46} \selectfont \bfseries{\firstname}} \\*
+     \bfseries\LARGE{\lastname} \\
+     \DTLifnullorempty{\dorg}{}{{\Large https://drupal.org/u/\bfseries{\dorg}} \\}
+     \linebreak\job \\
+     \linebreak\company
      \end{tabular}%
    }
    \clearpage
